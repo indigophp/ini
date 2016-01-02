@@ -24,7 +24,6 @@ class RendererSpec extends ObjectBehavior
 [section]
 key = "value"
 
-
 EOF;
 
         $this->render($ini)->shouldReturn($renderedIni);
@@ -45,10 +44,8 @@ EOF;
 [section]
 key = "value"
 
-
 [section2]
 key = "value"
-
 
 EOF;
 
@@ -78,12 +75,10 @@ section1[] = "value2"
 section1[] = "null"
 key1 = "value3"
 
-
 [section2]
 key1 = 1
 key2 = 0
 key3 = "null"
-
 
 EOF;
         $this->render($ini)->shouldReturn($renderedIni);
@@ -114,7 +109,6 @@ section[] = "section_value"
 section[] = "another_section_value"
 key = "value"
 
-
 EOF;
 
         $this->render($ini)->shouldReturn($renderedIni);
@@ -135,7 +129,6 @@ EOF;
 [section]
 key[] = "value"
 key[] = "value"
-
 
 EOF;
 
@@ -173,7 +166,6 @@ EOF;
 [section]
 key = "value,value"
 
-
 EOF;
 
         $this->render($ini)->shouldReturn($renderedIni);
@@ -195,7 +187,6 @@ EOF;
         $renderedIni = <<< EOF
 [section]
 key = "value,value"
-
 
 EOF;
 
@@ -221,7 +212,6 @@ EOF;
 section = "value,another_value,value"
 key = "value"
 
-
 EOF;
 
         $this->render($ini)->shouldReturn($renderedIni);
@@ -240,7 +230,6 @@ EOF;
 [section]
 key = 1
 key2 = 0
-
 
 EOF;
 
@@ -263,7 +252,6 @@ EOF;
 key = "true"
 key2 = "false"
 
-
 EOF;
 
         $this->render($ini)->shouldReturn($renderedIni);
@@ -284,7 +272,6 @@ EOF;
 [section]
 key = "On"
 key2 = "Off"
-
 
 EOF;
 

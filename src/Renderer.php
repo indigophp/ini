@@ -85,7 +85,7 @@ class Renderer
             array_unshift($sectionOutput, sprintf('[%s]', $sectionName));
 
             // Write a linefeed after sections
-            $sectionOutput[] = "\n";
+            $sectionOutput[] = "";
 
             $output = array_merge($output, $sectionOutput);
         }
@@ -176,7 +176,7 @@ class Renderer
     }
 
     /**
-     * Normalizes a boolean value;.
+     * Normalizes a boolean value.
      *
      * @param bool $value
      *
