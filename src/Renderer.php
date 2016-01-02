@@ -12,13 +12,13 @@ use Indigo\Ini\Exception\RendererException;
 class Renderer
 {
     /**
-     * Constants determining how the library should handle array values
+     * Constants determining how the library should handle array values.
      */
     const ARRAY_MODE_ARRAY = 1;
     const ARRAY_MODE_CONCAT = 2;
 
     /**
-     * Constants determining how the library should handle boolean values
+     * Constants determining how the library should handle boolean values.
      */
     const BOOLEAN_MODE_INTEGER = 1;
     const BOOLEAN_MODE_BOOL_STRING = 2;
@@ -156,7 +156,7 @@ class Renderer
                     $v = trim($this->normalizeValue($v), '"'); // We don't want string normalization here
                 }
 
-                return implode(",", $value);
+                return implode(',', $value);
 
                 break;
             case self::ARRAY_MODE_ARRAY:
@@ -176,7 +176,7 @@ class Renderer
     }
 
     /**
-     * Normalizes a boolean value;
+     * Normalizes a boolean value;.
      *
      * @param bool $value
      *
