@@ -1,0 +1,5 @@
+suites:
+    ini_suite:
+        namespace: Indigo\Ini
+        psr4_prefix: Indigo\Ini
+formatter.name: pretty
