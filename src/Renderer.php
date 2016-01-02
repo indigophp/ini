@@ -85,7 +85,7 @@ class Renderer
             array_unshift($sectionOutput, sprintf('[%s]', $sectionName));
 
             // Write a linefeed after sections
-            $sectionOutput[] = "";
+            $sectionOutput[] = '';
 
             $output = array_merge($output, $sectionOutput);
         }
