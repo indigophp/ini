@@ -72,13 +72,13 @@ EOF;
 [section1]
 section1[] = "value1"
 section1[] = "value2"
-section1[] = "null"
+section1[] = null
 key1 = "value3"
 
 [section2]
 key1 = 1
 key2 = 0
-key3 = "null"
+key3 = null
 
 EOF;
         $this->render($ini)->shouldReturn($renderedIni);
@@ -249,8 +249,8 @@ EOF;
 
         $renderedIni = <<< EOF
 [section]
-key = "true"
-key2 = "false"
+key = true
+key2 = false
 
 EOF;
 
@@ -270,8 +270,8 @@ EOF;
 
         $renderedIni = <<< EOF
 [section]
-key = "On"
-key2 = "Off"
+key = On
+key2 = Off
 
 EOF;
 

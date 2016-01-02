@@ -132,9 +132,7 @@ class Renderer
             $value = $this->normalizeBoolean($value);
         } elseif (is_null($value)) {
             $value = 'null';
-        }
-
-        if (is_string($value)) {
+        } elseif (is_string($value)) {
             $value = sprintf('"%s"', $value);
         }
 
@@ -156,7 +154,7 @@ class Renderer
                     $v = trim($this->normalizeValue($v), '"'); // We don't want string normalization here
                 }
 
-                return implode(',', $value);
+                return sprintf('"%s"', implode(',', $value));
 
                 break;
             case self::ARRAY_MODE_ARRAY:
