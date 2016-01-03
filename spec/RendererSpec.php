@@ -7,81 +7,21 @@ use PhpSpec\ObjectBehavior;
 
 class RendererSpec extends ObjectBehavior
 {
+    use IniExamples {
+        iniExamples as commonIniExamples;
+    }
+
     function it_is_initializable()
     {
         $this->shouldHaveType('Indigo\Ini\Renderer');
     }
 
-    function it_renders_plain_ini()
+    /**
+     *  @dataProvider iniExamples
+     */
+    function it_renders_ini($iniArray, $iniString)
     {
-        $ini = [
-            'section' => [
-                'key' => 'value',
-            ],
-        ];
-
-        $renderedIni = <<< EOF
-[section]
-key = "value"
-
-EOF;
-
-        $this->render($ini)->shouldReturn($renderedIni);
-    }
-
-    function it_renders_multiple_sections()
-    {
-        $ini = [
-            'section' => [
-                'key' => 'value',
-            ],
-            'section2' => [
-                'key' => 'value',
-            ],
-        ];
-
-        $renderedIni = <<< EOF
-[section]
-key = "value"
-
-[section2]
-key = "value"
-
-EOF;
-
-        $this->render($ini)->shouldReturn($renderedIni);
-    }
-
-    function it_renders_complex_sections()
-    {
-        $ini = [
-            'section1' => [
-                'value1',
-                'key1' => 'value3',
-                'value2',
-                null,
-            ],
-            'section2' => [
-                'key1' => true,
-                'key2' => false,
-                'key3' => null,
-            ],
-        ];
-
-        $renderedIni = <<< EOF
-[section1]
-section1[] = "value1"
-section1[] = "value2"
-section1[] = null
-key1 = "value3"
-
-[section2]
-key1 = 1
-key2 = 0
-key3 = null
-
-EOF;
-        $this->render($ini)->shouldReturn($renderedIni);
+        $this->render($iniArray)->shouldReturn($iniString);
     }
 
     function it_throws_an_exception_when_non_array_section_is_passed()
@@ -91,48 +31,6 @@ EOF;
         ];
 
         $this->shouldThrow('Indigo\Ini\Exception\RendererException')->duringRender($ini);
-    }
-
-    function it_renders_ini_with_empty_keys()
-    {
-        $ini = [
-            'section' => [
-                'section_value',
-                'another_section_value',
-                'key' => 'value',
-            ],
-        ];
-
-        $renderedIni = <<< EOF
-[section]
-section[] = "section_value"
-section[] = "another_section_value"
-key = "value"
-
-EOF;
-
-        $this->render($ini)->shouldReturn($renderedIni);
-    }
-
-    function it_renders_ini_with_array_values()
-    {
-        $ini = [
-            'section' => [
-                'key' => [
-                    'value',
-                    'value',
-                ],
-            ],
-        ];
-
-        $renderedIni = <<< EOF
-[section]
-key[] = "value"
-key[] = "value"
-
-EOF;
-
-        $this->render($ini)->shouldReturn($renderedIni);
     }
 
     function it_throws_an_exception_when_multi_dimensional_array_is_passed()
@@ -278,45 +176,20 @@ EOF;
         $this->render($ini)->shouldReturn($renderedIni);
     }
 
-    function it_renders_ini_with_null_value()
+    public function iniExamples()
     {
-        $ini = [
-            'section' => [
-                'key' => null,
+        $examples = [
+            [
+                [
+                    'section' => [
+                        'key' => true,
+                        'key2' => false,
+                    ],
+                ],
+                "[section]\nkey = 1\nkey2 = 0\n",
             ],
         ];
 
-        $renderedIni = <<< EOF
-[section]
-key = null
-
-EOF;
-
-        $this->render($ini)->shouldReturn($renderedIni);
-    }
-
-    function it_renders_ini_with_numeric_values()
-    {
-        $ini = [
-            'section' => [
-                'key' => 1,
-                'key2' => -1,
-                'key3' => 1.2,
-                'key4' => -1.2,
-                'key5' => 0,
-            ],
-        ];
-
-        $renderedIni = <<< EOF
-[section]
-key = 1
-key2 = -1
-key3 = 1.2
-key4 = -1.2
-key5 = 0
-
-EOF;
-
-        $this->render($ini)->shouldReturn($renderedIni);
+        return array_merge($examples, $this->commonIniExamples());
     }
 }
