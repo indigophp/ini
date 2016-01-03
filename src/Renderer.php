@@ -132,9 +132,10 @@ class Renderer
             $value = $this->normalizeBoolean($value);
         } elseif (is_null($value)) {
             $value = 'null';
-        } elseif (is_string($value)) {
-            $value = sprintf('"%s"', $value);
         }
+//        elseif (is_string($value)) {
+//            $value = sprintf('"%s"', $value);
+//        }
 
         return $value;
     }
