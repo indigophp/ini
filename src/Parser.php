@@ -93,13 +93,15 @@ class Parser
         }
 
         // Normalize numeric value
-        if (is_numeric($value) && ((string) ($value + 0) === $value)) {
-            $value = $value + 0;
+        if (is_numeric($value)) {
+            $numericValue = $value + 0;
 
             // Typed ini parsing does not support negative doubles
             // https://3v4l.org/ujDo1
-            if (is_float($value) and $value < 0) {
-                $value = (string) $value;
+            if ((is_int($numericValue) && (int)$value === $numericValue)
+                || (is_float($numericValue) && (float)$value === $numericValue && $numericValue > 0)
+            ) {
+                $value = $numericValue;
             }
         }
 
