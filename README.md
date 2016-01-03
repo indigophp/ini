@@ -22,7 +22,7 @@ $ composer require indigophp/ini
 
 Features:
 
-- Throw exceptions instead of errors
+- Throws exceptions instead of errors
 - Converts special values (integer, boolean values)
 - Renders an array as INI string
 
@@ -43,6 +43,8 @@ Differences:
 - License
 - File actions are not available in this library, that's your responsibility
 - Fallback implementation is provided by a transparent compatibility layer (WIP)
+- Provides type conversion like in PHP 5.6.1
+- Provides different ways for rendering array and boolean values
 
 
 ## License
