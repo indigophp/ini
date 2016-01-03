@@ -277,4 +277,21 @@ EOF;
 
         $this->render($ini)->shouldReturn($renderedIni);
     }
+
+    function it_renders_ini_with_null_value()
+    {
+        $ini = [
+            'section' => [
+                'key' => null,
+            ],
+        ];
+
+        $renderedIni = <<< EOF
+[section]
+key = null
+
+EOF;
+
+        $this->render($ini)->shouldReturn($renderedIni);
+    }
 }

@@ -214,4 +214,21 @@ EOF;
 
         $this->parse($ini)->shouldReturn($parsedIni);
     }
+
+    function it_parses_ini_with_null_value()
+    {
+        $parsedIni = [
+            'section' => [
+                'key' => null,
+            ],
+        ];
+
+        $ini = <<< EOF
+[section]
+key = null
+
+EOF;
+
+        $this->parse($ini)->shouldReturn($parsedIni);
+    }
 }
