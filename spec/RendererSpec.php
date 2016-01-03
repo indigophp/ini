@@ -294,4 +294,29 @@ EOF;
 
         $this->render($ini)->shouldReturn($renderedIni);
     }
+
+    function it_renders_ini_with_numeric_values()
+    {
+        $ini = [
+            'section' => [
+                'key' => 1,
+                'key2' => -1,
+                'key3' => 1.2,
+                'key4' => -1.2,
+                'key5' => 0,
+            ],
+        ];
+
+        $renderedIni = <<< EOF
+[section]
+key = 1
+key2 = -1
+key3 = 1.2
+key4 = -1.2
+key5 = 0
+
+EOF;
+
+        $this->render($ini)->shouldReturn($renderedIni);
+    }
 }

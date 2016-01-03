@@ -231,4 +231,29 @@ EOF;
 
         $this->parse($ini)->shouldReturn($parsedIni);
     }
+
+    function it_parses_ini_with_numeric_values()
+    {
+        $parsedIni = [
+            'section' => [
+                'key' => 1,
+                'key2' => -1,
+                'key3' => 1.2,
+                'key4' => -1.2,
+                'key5' => 0,
+            ],
+        ];
+
+        $ini = <<< EOF
+[section]
+key = 1
+key2 = -1
+key3 = 1.2
+key4 = -1.2
+key5 = 0
+
+EOF;
+
+        $this->parse($ini)->shouldReturn($parsedIni);
+    }
 }
