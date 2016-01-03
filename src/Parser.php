@@ -98,8 +98,8 @@ class Parser
 
             // Typed ini parsing does not support negative doubles
             // https://3v4l.org/ujDo1
-            if ((is_int($numericValue) && (int)$value === $numericValue)
-                || (is_float($numericValue) && (float)$value === $numericValue && $numericValue > 0)
+            if ((is_int($numericValue) && (int) $value === $numericValue)
+                || (is_float($numericValue) && (float) $value === $numericValue && $numericValue > 0)
             ) {
                 $value = $numericValue;
             }
