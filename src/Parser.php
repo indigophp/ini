@@ -89,7 +89,7 @@ class Parser
 
         // Normalize null value
         if ($value === '' && strcasecmp($rawValue, 'null') === 0) {
-            return null;
+            return;
         }
 
         // Normalize numeric value
