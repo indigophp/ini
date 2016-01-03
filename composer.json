@@ -2,7 +2,7 @@
     "name": "indigophp/ini",
     "description": "Provides better INI parsing and rendering",
     "license": "MIT",
-    "keywords": ["ini"],
+    "keywords": ["ini", "parser", "renderer"],
     "homepage": "http://indigophp.com",
     "authors": [
         {
@@ -28,7 +28,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.1-dev"
+            "dev-master": "0.2-dev"
         }
     }
 }
