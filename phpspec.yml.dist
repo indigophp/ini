@@ -3,3 +3,5 @@ suites:
         namespace: Indigo\Ini
         psr4_prefix: Indigo\Ini
 formatter.name: pretty
+extensions:
+    - Coduo\PhpSpec\DataProvider\DataProviderExtension
