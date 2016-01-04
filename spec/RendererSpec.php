@@ -47,133 +47,14 @@ class RendererSpec extends ObjectBehavior
         $this->shouldThrow('Indigo\Ini\Exception\RendererException')->duringRender($ini);
     }
 
-    function it_renders_ini_with_array_values_in_concat_mode()
+    /**
+     *  @dataProvider iniExamplesWithMode
+     */
+    function it_renders_ini_with_mode($mode, $iniArray, $iniString)
     {
-        $this->beConstructedWith(Renderer::ARRAY_MODE_CONCAT);
+        $this->beConstructedWith($mode);
 
-        $ini = [
-            'section' => [
-                'key' => [
-                    'value',
-                    'value',
-                ],
-            ],
-        ];
-
-        $renderedIni = <<< EOF
-[section]
-key = "value,value"
-
-EOF;
-
-        $this->render($ini)->shouldReturn($renderedIni);
-    }
-
-    function it_renders_ini_with_multi_dimensional_array_values_in_concat_mode()
-    {
-        $this->beConstructedWith(Renderer::ARRAY_MODE_CONCAT);
-
-        $ini = [
-            'section' => [
-                'key' => [
-                    ['value'],
-                    'value',
-                ],
-            ],
-        ];
-
-        $renderedIni = <<< EOF
-[section]
-key = "value,value"
-
-EOF;
-
-        $this->render($ini)->shouldReturn($renderedIni);
-    }
-
-    function it_renders_ini_with_section_array_values_in_concat_mode()
-    {
-        $this->beConstructedWith(Renderer::ARRAY_MODE_CONCAT);
-
-        $ini = [
-            'section' => [
-                ['value', 'another_value'],
-                'value',
-                'key' => [
-                    'value',
-                ],
-            ],
-        ];
-
-        $renderedIni = <<< EOF
-[section]
-section = "value,another_value,value"
-key = "value"
-
-EOF;
-
-        $this->render($ini)->shouldReturn($renderedIni);
-    }
-
-    function it_renders_ini_with_boolean_values()
-    {
-        $ini = [
-            'section' => [
-                'key' => true,
-                'key2' => false,
-            ],
-        ];
-
-        $renderedIni = <<< EOF
-[section]
-key = 1
-key2 = 0
-
-EOF;
-
-        $this->render($ini)->shouldReturn($renderedIni);
-    }
-
-    function it_renders_ini_with_boolean_values_in_boolean_string_mode()
-    {
-        $this->beConstructedWith(Renderer::ARRAY_MODE_ARRAY, Renderer::BOOLEAN_MODE_BOOL_STRING);
-
-        $ini = [
-            'section' => [
-                'key' => true,
-                'key2' => false,
-            ],
-        ];
-
-        $renderedIni = <<< EOF
-[section]
-key = true
-key2 = false
-
-EOF;
-
-        $this->render($ini)->shouldReturn($renderedIni);
-    }
-
-    function it_renders_ini_with_boolean_values_in_string_mode()
-    {
-        $this->beConstructedWith(Renderer::ARRAY_MODE_ARRAY, Renderer::BOOLEAN_MODE_STRING);
-
-        $ini = [
-            'section' => [
-                'key' => true,
-                'key2' => false,
-            ],
-        ];
-
-        $renderedIni = <<< EOF
-[section]
-key = On
-key2 = Off
-
-EOF;
-
-        $this->render($ini)->shouldReturn($renderedIni);
+        $this->render($iniArray)->shouldReturn($iniString);
     }
 
     public function iniExamples()
@@ -191,5 +72,78 @@ EOF;
         ];
 
         return array_merge($examples, $this->commonIniExamples());
+    }
+
+    public function iniExamplesWithMode()
+    {
+        return [
+            [
+                Renderer::ARRAY_MODE_CONCAT,
+                [
+                    'section' => [
+                        'key' => [
+                            'value',
+                            'value',
+                        ],
+                    ],
+                ],
+                "[section]\nkey = value,value\n",
+            ],
+            [
+                Renderer::ARRAY_MODE_CONCAT,
+                [
+                    'section' => [
+                        'key' => [
+                            ['value'],
+                            'value',
+                        ],
+                    ],
+                ],
+                "[section]\nkey = value,value\n",
+            ],
+            [
+                Renderer::ARRAY_MODE_CONCAT,
+                [
+                    'section' => [
+                        ['value', 'another_value'],
+                        'value',
+                        'key' => [
+                            'value',
+                        ],
+                    ],
+                ],
+                "[section]\nsection = value,another_value,value\nkey = value\n",
+            ],
+            [
+                Renderer::BOOLEAN_MODE_BOOL_STRING,
+                [
+                    'section' => [
+                        'key' => true,
+                        'key2' => false,
+                    ],
+                ],
+                "[section]\nkey = true\nkey2 = false\n",
+            ],
+            [
+                Renderer::BOOLEAN_MODE_STRING,
+                [
+                    'section' => [
+                        'key' => true,
+                        'key2' => false,
+                    ],
+                ],
+                "[section]\nkey = On\nkey2 = Off\n",
+            ],
+            [
+                Renderer::STRING_MODE_QUOTE | Renderer::ARRAY_MODE_CONCAT,
+                [
+                    'section' => [
+                        'key' => ['value1', 'value2'],
+                        'key2' => 'value3',
+                    ],
+                ],
+                "[section]\nkey = \"value1,value2\"\nkey2 = \"value3\"\n",
+            ],
+        ];
     }
 }
