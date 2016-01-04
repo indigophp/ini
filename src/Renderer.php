@@ -20,28 +20,23 @@ class Renderer
     /**
      * Constants determining how the library should handle boolean values.
      */
-    const BOOLEAN_MODE_INTEGER = 1;
-    const BOOLEAN_MODE_BOOL_STRING = 2;
-    const BOOLEAN_MODE_STRING = 3;
+    const BOOLEAN_MODE_INTEGER = 4;
+    const BOOLEAN_MODE_BOOL_STRING = 8;
+    const BOOLEAN_MODE_STRING = 16;
+
+    const STRING_MODE_QUOTE = 32;
 
     /**
      * @var int
      */
-    protected $arrayMode = self::ARRAY_MODE_ARRAY;
+    protected $flags = 5;
 
     /**
-     * @var int
+     * @param int $flags
      */
-    protected $booleanMode = self::BOOLEAN_MODE_INTEGER;
-
-    /**
-     * @param int $arrayMode
-     * @param int $booleanMode
-     */
-    public function __construct($arrayMode = self::ARRAY_MODE_ARRAY, $booleanMode = self::BOOLEAN_MODE_INTEGER)
+    public function __construct($flags = 5)
     {
-        $this->arrayMode = $arrayMode;
-        $this->booleanMode = $booleanMode;
+        $this->flags = $flags;
     }
 
     /**
@@ -132,7 +127,7 @@ class Renderer
             $value = $this->normalizeBoolean($value);
         } elseif (is_null($value)) {
             $value = 'null';
-        } elseif (is_string($value)) {
+        } elseif (is_string($value) && $this->checkFlag(self::STRING_MODE_QUOTE)) {
             $value = sprintf('"%s"', $value);
         }
 
@@ -148,16 +143,8 @@ class Renderer
      */
     protected function normalizeArray($value)
     {
-        switch ($this->arrayMode) {
-            case self::ARRAY_MODE_CONCAT:
-                foreach ($value as &$v) {
-                    $v = trim($this->normalizeValue($v), '"'); // We don't want string normalization here
-                }
-
-                return sprintf('"%s"', implode(',', $value));
-
-                break;
-            case self::ARRAY_MODE_ARRAY:
+        switch (true) {
+            case $this->checkFlag(self::ARRAY_MODE_ARRAY):
             default:
                 foreach ($value as &$v) {
                     if (is_array($v)) {
@@ -168,6 +155,15 @@ class Renderer
                 }
 
                 return $value;
+
+                break;
+
+            case $this->checkFlag(self::ARRAY_MODE_CONCAT):
+                foreach ($value as &$v) {
+                    $v = trim($this->normalizeValue($v), '"'); // We don't want string normalization here
+                }
+
+                return $this->normalizeValue(implode(',', $value));
 
                 break;
         }
@@ -182,22 +178,34 @@ class Renderer
      */
     protected function normalizeBoolean($value)
     {
-        switch ($this->booleanMode) {
-            case self::BOOLEAN_MODE_BOOL_STRING:
-                return $value === true ? 'true' : 'false';
-
-                break;
-
-            case self::BOOLEAN_MODE_STRING:
-                return $value === true ? 'On' : 'Off';
-
-                break;
-
-            case self::BOOLEAN_MODE_INTEGER:
+        switch (true) {
+            case $this->checkFlag(self::BOOLEAN_MODE_INTEGER):
             default:
                 return (int) $value;
 
                 break;
+
+            case $this->checkFlag(self::BOOLEAN_MODE_BOOL_STRING):
+                return $value === true ? 'true' : 'false';
+
+                break;
+
+            case $this->checkFlag(self::BOOLEAN_MODE_STRING):
+                return $value === true ? 'On' : 'Off';
+
+                break;
         }
+    }
+
+    /**
+     * Checks if a flag is active.
+     *
+     * @param int $flag
+     *
+     * @return bool
+     */
+    private function checkFlag($flag)
+    {
+        return (bool) ($this->flags & $flag);
     }
 }

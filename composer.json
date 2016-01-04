@@ -11,15 +11,21 @@
         }
     ],
     "require": {
-        "php": ">=5.4"
+        "php": ">=5.4.5"
     },
     "require-dev": {
         "phpspec/phpspec": "^2.4",
-        "henrikbjorn/phpspec-code-coverage" : "^1.0"
+        "henrikbjorn/phpspec-code-coverage" : "^1.0",
+        "coduo/phpspec-data-provider-extension": "^1.0"
     },
     "autoload": {
         "psr-4": {
             "Indigo\\Ini\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "spec\\Indigo\\Ini\\": "spec/"
         }
     },
     "scripts": {

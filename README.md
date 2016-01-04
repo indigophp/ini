@@ -45,6 +45,7 @@ Differences:
 - Fallback implementation is provided by a transparent compatibility layer (WIP)
 - Provides type conversion like in PHP 5.6.1
 - Provides different ways for rendering array and boolean values
+- Parser always uses raw scanner mode
 
 
 ## License
