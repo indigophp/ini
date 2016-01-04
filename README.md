@@ -25,6 +25,7 @@ Features:
 - Throws exceptions instead of errors
 - Converts special values (integer, boolean values)
 - Renders an array as INI string
+- Control rendered output by passing flags to the renderer
 
 
 ## Testing
