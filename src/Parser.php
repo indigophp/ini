@@ -76,8 +76,8 @@ class Parser
         if (is_numeric($value)) {
             $numericValue = $value + 0;
 
-            if ((is_int($numericValue) && (int)$value === $numericValue)
-                || (is_float($numericValue) && (float)$value === $numericValue)
+            if ((is_int($numericValue) && (int) $value === $numericValue)
+                || (is_float($numericValue) && (float) $value === $numericValue)
             ) {
                 $value = $numericValue;
             }
