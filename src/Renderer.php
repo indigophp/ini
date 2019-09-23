@@ -102,10 +102,8 @@ class Renderer
         $value = $this->normalizeValue($value);
 
         if (is_array($value)) {
-            foreach ($value as $v) {
-                $output[] = sprintf('%s[] = %s', $key, $v);
-            }
-        } else {
+	   $output[] = sprintf('%s = %s', $key, join($value, ','));
+	} else {
             $output[] = sprintf('%s = %s', $key, $value);
         }
 
