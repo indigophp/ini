@@ -102,7 +102,7 @@ class Renderer
         $value = $this->normalizeValue($value);
 
         if (is_array($value)) {
-	   $output[] = sprintf('%s = %s', $key, join($value, ','));
+	    $output[] = sprintf('%s = %s', $key, join($value, ','));
 	} else {
             $output[] = sprintf('%s = %s', $key, $value);
         }
